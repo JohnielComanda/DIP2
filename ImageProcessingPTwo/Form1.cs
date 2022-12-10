@@ -23,6 +23,12 @@ namespace ImageProcessingPTwo
             openFileDialog1.ShowDialog();
         }
 
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            loaded = new Bitmap(openFileDialog1.FileName);
+            pictureBox1.Image = loaded;
+        }
+
         private void greyscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
@@ -178,5 +184,6 @@ namespace ImageProcessingPTwo
 
             pictureBox2.Image = processed;
         }
+
     }
 }
