@@ -132,6 +132,39 @@ namespace ImageProcessingPTwo
             pictureBox2.Image = processed;
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+            saveFileDialog1.Title = "Save an Image File";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                System.IO.FileStream fs =
+                    (System.IO.FileStream)saveFileDialog1.OpenFile();
+
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        pictureBox2.Image.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        pictureBox2.Image.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+
+                    case 3:
+                        pictureBox2.Image.Save(fs,
+                          System.Drawing.Imaging.ImageFormat.Gif);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
+
         private void basicCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
