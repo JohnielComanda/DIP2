@@ -2,12 +2,13 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ImageProcessingPTwo
 {
     public partial class Form1 : Form
     {
-        Bitmap loaded, processed;
+        Bitmap loaded, processed, imageA, imageB;
         public Form1()
         {
             InitializeComponent();
@@ -141,6 +142,20 @@ namespace ImageProcessingPTwo
             pictureBox2.Image = processed;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.ShowDialog();
+            imageB = new Bitmap(openFileDialog2.FileName);
+            pictureBox1.Image = imageB;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openFileDialog3.ShowDialog();
+            imageA = new Bitmap(openFileDialog3.FileName);
+            pictureBox2.Image = imageA;
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
@@ -172,6 +187,29 @@ namespace ImageProcessingPTwo
 
                 fs.Close();
             }
+        }
+
+        private void subtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap resultImage = new Bitmap(imageA.Width, imageA.Height);
+            Color mygreen = Color.FromArgb(51, 255, 5);
+            int greygreen = (mygreen.R + mygreen.G + mygreen.B) / 3;
+            int threshold = 5;
+            for (int x = 0; x < imageB.Width; x++)
+            {
+                for (int y = 0; y < imageB.Height; y++)
+                {
+                    Color pixel = imageB.GetPixel(x, y);
+                    Color backpixel = imageA.GetPixel(x, y);
+                    int grey = (pixel.R + pixel.G + pixel.B) / 3;
+                    int subtract = Math.Abs(grey - greygreen);
+                    if (subtract < threshold)
+                        resultImage.SetPixel(x, y, backpixel);
+                    else
+                        resultImage.SetPixel(x, y, pixel);
+                }
+            }
+            pictureBox3.Image = resultImage;
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
