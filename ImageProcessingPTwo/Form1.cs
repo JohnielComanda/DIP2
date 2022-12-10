@@ -104,6 +104,34 @@ namespace ImageProcessingPTwo
             pictureBox2.Image = b;
         }
 
+        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            for (int x = 0; x < loaded.Width; x++)
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    Color pixel = loaded.GetPixel(x, y);
+                    int sepiaRed = Convert.ToInt32(0.393 * pixel.R + 0.769 * pixel.G + 0.189 * pixel.B);
+                    int sepiaGreen = Convert.ToInt32(0.349 * pixel.R + 0.686 * pixel.G + 0.168 * pixel.B);
+                    int sepiaBlue = Convert.ToInt32(0.272 * pixel.R + 0.534 * pixel.G + 0.131 * pixel.B);
+
+                    if (sepiaRed > 255)
+                        sepiaRed = 255;
+
+                    if (sepiaGreen > 255)
+                        sepiaGreen = 255;
+
+                    if (sepiaBlue > 255)
+                        sepiaBlue = 255;
+
+                    Color sepia = Color.FromArgb(sepiaRed, sepiaGreen, sepiaBlue);
+                    processed.SetPixel(x, y, sepia);
+                }
+
+            pictureBox2.Image = processed;
+        }
+
         private void basicCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);

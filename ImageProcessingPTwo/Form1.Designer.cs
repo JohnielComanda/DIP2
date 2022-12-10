@@ -149,6 +149,7 @@
             this.sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
             this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.sepiaToolStripMenuItem.Text = "Sepia";
+            this.sepiaToolStripMenuItem.Click += new System.EventHandler(this.sepiaToolStripMenuItem_Click);
             // 
             // Form1
             // 
