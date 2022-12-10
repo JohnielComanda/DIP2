@@ -135,6 +135,7 @@
             this.colorInversionToolStripMenuItem.Name = "colorInversionToolStripMenuItem";
             this.colorInversionToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.colorInversionToolStripMenuItem.Text = "Color Inversion";
+            this.colorInversionToolStripMenuItem.Click += new System.EventHandler(this.colorInversionToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
