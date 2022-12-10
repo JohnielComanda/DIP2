@@ -55,6 +55,55 @@ namespace ImageProcessingPTwo
             pictureBox2.Image = processed;
         }
 
+        private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Color sample;
+            Color gray;
+            Byte graydata;
+
+            Bitmap a = (Bitmap)pictureBox1.Image;
+            Bitmap b = (Bitmap)pictureBox2.Image;
+
+            for (int x = 0; x < a.Width; x++)
+            {
+                for (int y = 0; y < a.Height; y++)
+                {
+                    sample = a.GetPixel(x, y);
+                    graydata = (byte)((sample.R + sample.G + sample.B) / 3);
+                    gray = Color.FromArgb(graydata, graydata, graydata);
+                    a.SetPixel(x, y, gray);
+                }
+            }
+
+            int[] histdata = new int[256];
+            for (int x = 0; x < a.Width; x++)
+            {
+                for (int y = 0; y < a.Height; y++)
+                {
+                    sample = a.GetPixel(x, y);
+                    histdata[sample.R]++;
+                }
+            }
+
+            b = new Bitmap(256, 800);
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < 800; y++)
+                {
+                    b.SetPixel(x, y, Color.White);
+                }
+            }
+
+            for (int x = 0; x < 256; x++)
+            {
+                for (int y = 0; y < Math.Min(histdata[x] / 5, b.Height - 1); y++)
+                {
+                    b.SetPixel(x, (b.Height - 1) - y, Color.Black);
+                }
+            }
+            pictureBox2.Image = b;
+        }
+
         private void basicCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
